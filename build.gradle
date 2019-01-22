@@ -1,4 +1,24 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = 'ru.borisbochkarev.Main'
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.1.2.RELEASE')
+    }
+}
+
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.1.2.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.2.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.1.2.RELEASE'
+}
