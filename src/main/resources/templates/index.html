@@ -1,11 +1,38 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      ng-app="PhoneBookApp">
     <head>
         <title>Пример Java приложения</title>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
     </head>
-    <body>
+    <script type="text/javascript">
+        angular.module('PhoneBookApp', ['ngMaterial'])
+            .controller('PhoneBookCtrl', function($scope, $http) {
+                $http.get("/get_user")
+                     .then(function(result){
+                         $scope.user = result.data;
+                     }, function(error){
+                         console.log("Error = ", error);
+                     })
+            });
+    </script>
+    <body ng-controller="PhoneBookCtrl">
         <h1>Добро пожаловать!</h1>
+        <button type="button" class="btn btn-success">Success</button>
+        <button type="button" class="btn btn-info">Info</button>
+        <md-button class="md-raised md-primary">Primary</md-button>
+        <br />
+        {{user.id}}<br />
+        {{user.fio}}
     </body>
 </html>
