@@ -1,11 +1,13 @@
 package ru.borisbochkarev.phonebook;
 
-public class Individual extends User {
+public class IndividualUser extends User {
 
     private String homeAddress;
 
-    public Individual(int id, String fio, String homeAddress) {
-        super(id, fio);
+    public IndividualUser(){}
+
+    public IndividualUser(Long id, String fio, String phone, String homeAddress) {
+        super(id, fio, phone);
         this.homeAddress = homeAddress;
     }
 

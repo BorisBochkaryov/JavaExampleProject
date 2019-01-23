@@ -18,21 +18,159 @@
     <script type="text/javascript">
         angular.module('PhoneBookApp', ['ngMaterial'])
             .controller('PhoneBookCtrl', function($scope, $http) {
-                $http.get("/get_user")
+                $http.get("/get_all_entity_users")
                      .then(function(result){
-                         $scope.user = result.data;
+                         $scope.entity_users = result.data;
                      }, function(error){
                          console.log("Error = ", error);
-                     })
+                     });
+
+                $http.get("/get_all_individual_users")
+                     .then(function(result){
+                         $scope.individual_users = result.data;
+                     }, function(error){
+                         console.log("Error = ", error);
+                     });
+
+                $scope.sendIndividualUser = function() {
+                     $scope.data = 'fio=' + $scope.individualUser.fio +
+                                 '&homeAddress=' + $scope.individualUser.homeAddress +
+                                 '&phone=' + $scope.individualUser.phone;
+                     $http({
+                         method: "POST",
+                         url: "/add_individual_user",
+                         data: $scope.data,
+                         transformResponse: [
+                            function (data) {
+                                return data;
+                            }
+                         ],
+                         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                     }).then(function(){
+                         $http.get("/get_all_individual_users")
+                              .then(function(result){
+                                  $scope.individual_users = result.data;
+                              }, function(error){
+                                  console.log("Error = ", error);
+                              });
+                     });
+                };
+
+                $scope.sendEntityUser = function() {
+                     $scope.data = 'fio=' + $scope.entityUser.fio +
+                                 '&authorizedcapital=' + $scope.entityUser.authorizedcapital +
+                                 '&phone=' + $scope.entityUser.phone;
+                     $http({
+                         method: "POST",
+                         url: "/add_entity_user",
+                         data: $scope.data,
+                         transformResponse: [
+                            function (data) {
+                                return data;
+                            }
+                         ],
+                         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                     }).then(function(){
+                         $http.get("/get_all_entity_users")
+                             .then(function(result){
+                                 $scope.entity_users = result.data;
+                             }, function(error){
+                                 console.log("Error = ", error);
+                             });
+                     });
+                };
             });
     </script>
     <body ng-controller="PhoneBookCtrl">
-        <h1>Добро пожаловать!</h1>
-        <button type="button" class="btn btn-success">Success</button>
-        <button type="button" class="btn btn-info">Info</button>
-        <md-button class="md-raised md-primary">Primary</md-button>
-        <br />
-        {{user.id}}<br />
-        {{user.fio}}
+        <div class="row">
+            <div class="col-md-6">
+                <h3><center>Юридические лица</center></h3>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4><center>Новое юридическое лицо</center></h4>
+                        <center>
+                            <form method="post" action="">
+                                <md-input-container>
+                                    <label>Ф.И.О</label>
+                                    <input ng-model="entityUser.fio">
+                                </md-input-container>
+                                <md-input-container>
+                                    <label>Телефон</label>
+                                    <input ng-model="entityUser.phone">
+                                </md-input-container>
+                                <md-input-container>
+                                    <label>Уставной капитал</label>
+                                    <input ng-model="entityUser.authorizedcapital" type="number">
+                                </md-input-container>
+                                <br />
+                                <md-button class="md-raised md-primary" ng-click="sendEntityUser()">Добавить</md-button>
+                            </form>
+                        </center>
+                    </div>
+                </div>
+
+                <div ng-repeat="user in entity_users">
+                    <md-card md-theme-watch>
+                        <md-card-title>
+                            <md-card-title-text>
+                                <span class="md-headline"><b>{{user.fio}}</b> ({{user.id}})</span>
+                                <span class="md-subhead">{{user.phone}}</span>
+                            </md-card-title-text>
+                        </md-card-title>
+                        <md-card-content>
+                            Уставной капитал: {{user.authorizedCapital}}
+                        </md-card-content>
+                        <md-card-actions layout="row" layout-align="end center">
+                            <md-button class="md-raised md-primary" ng-href="tel:{{user.phone}}">Позвонить</md-button>
+                        </md-card-actions>
+                    </md-card>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h3><center>Физические лица</center></h3>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4><center>Новое физическое лицо</center></h4>
+                        <center>
+                            <form method="post" action="">
+                                <md-input-container>
+                                    <label>Ф.И.О</label>
+                                    <input ng-model="individualUser.fio">
+                                </md-input-container>
+                                <md-input-container>
+                                    <label>Телефон</label>
+                                    <input ng-model="individualUser.phone">
+                                </md-input-container>
+                                <md-input-container>
+                                    <label>Домашний адрес</label>
+                                    <input ng-model="individualUser.homeAddress">
+                                </md-input-container>
+                                <br />
+                                <md-button class="md-raised md-primary" ng-click="sendIndividualUser()">Добавить</md-button>
+                            </form>
+                        </center>
+                    </div>
+                </div>
+
+                <div ng-repeat="user in individual_users">
+                    <md-card md-theme-watch>
+                        <md-card-title>
+                            <md-card-title-text>
+                                <span class="md-headline"><b>{{user.fio}}</b> ({{user.id}})</span>
+                                <span class="md-subhead">{{user.phone}}
+                            </md-card-title-text>
+                        </md-card-title>
+                        <md-card-content>
+                            Домашний адрес: {{user.homeAddress}}
+                        </md-card-content>
+                        <md-card-actions layout="row" layout-align="end center">
+                            <md-button class="md-raised md-primary" ng-href="tel:{{user.phone}}">Позвонить</md-button>
+                        </md-card-actions>
+                    </md-card>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

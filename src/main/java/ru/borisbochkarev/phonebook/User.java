@@ -1,15 +1,16 @@
 package ru.borisbochkarev.phonebook;
 
-public class User {
+public abstract class User {
 
-    private int id;
+    private Long id;
     private String fio;
+    private String phone;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -21,9 +22,19 @@ public class User {
         this.fio = fio;
     }
 
-    public User(int id, String fio) {
+    public User() {}
+
+    public User(Long id, String fio, String phone) {
         this.id = id;
         this.fio = fio;
+        this.phone = phone;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 }

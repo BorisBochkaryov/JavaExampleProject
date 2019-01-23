@@ -4,3 +4,7 @@ spring:
   thymeleaf:
     prefix: file:src/main/resources/templates/
     cache: false
+  datasource:
+    url: jdbc:mysql://localhost:3306/phonebook
+    username: root
+    password: 18091995
