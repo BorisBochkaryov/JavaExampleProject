@@ -5,3 +5,4 @@ build
 gradle/
 gradlew*
 out
+.DS_Store
