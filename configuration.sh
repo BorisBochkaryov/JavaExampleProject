@@ -24,6 +24,12 @@ case $1 in
         esac
         rm /tmp/java_project_example
     ;;
+    jar )
+        gradle build
+    ;;
+    run )
+        java -jar build/libs/java_project_example.jar
+    ;;
     * )
 
     ;;

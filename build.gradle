@@ -25,6 +25,8 @@ dependencies {
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.13'
 }
 
+mainClassName = 'ru.borisbochkarev.Application'
+
 jar {
     manifest {
         attributes 'Main-Class': 'ru.borisbochkarev.Application'
