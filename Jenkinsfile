@@ -11,10 +11,10 @@ pipeline {
         sh 'gradle jar'
       }
     }
-    post {
-      always {
-        archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
-      }
+  }
+  post {
+    always {
+      archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
     }
   }
 }
