@@ -11,10 +11,17 @@ pipeline {
         sh 'gradle jar'
       }
     }
+    stage('Tar.gz') {
+      steps {
+        sh 'gradle totar'
+      }
+    }
   }
   post {
     always {
-      archiveArtifacts artifacts: '*.tar.gz', fingerprint: true
+      archiveArtifacts(artifacts: '*.tar.gz', fingerprint: true)
+
     }
+
   }
 }
