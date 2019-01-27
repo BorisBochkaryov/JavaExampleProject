@@ -14,8 +14,7 @@ pipeline {
   }
   post {
     always {
-      archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
-      archiveArtifacts artifacts: 'build/resources', fingerprint: true
+      archiveArtifacts artifacts: '*.tar.gz', fingerprint: true
     }
   }
 }
