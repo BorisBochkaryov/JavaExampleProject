@@ -13,7 +13,7 @@ pipeline {
     }
     stage('Tar.gz') {
       steps {
-        sh 'gradle totar'
+        sh 'gradle tar'
       }
     }
   }

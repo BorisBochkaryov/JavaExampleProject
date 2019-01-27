@@ -33,6 +33,6 @@ jar {
     }
 }
 
-task totar(type: Exec) {
+task tar(type: Exec) {
     commandLine "bash", "-c", "tar -cvzf JavaExampleProject.tar.gz build/libs/*.jar build/resources"
 }
